@@ -1,0 +1,53 @@
+{
+  "name": "Sales-Order-Task",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "dependencies": {
+    "@cap-js/postgres": "^2.1.3",
+    "@sap-cloud-sdk/connectivity": "^4",
+    "@sap-cloud-sdk/http-client": "^4",
+    "@sap-cloud-sdk/resilience": "^4.4.0",
+    "@sap/cds": "^9",
+    "express": "^4",
+    "uuid": "^13.0.0"
+  },
+  "scripts": {
+    "start": "cds-serve"
+  },
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "postgres",
+        "impl": "@cap-js/postgres",
+        "credentials": {
+          "host": "localhost",
+          "port": 5432,
+          "user": "postgres",
+          "password": "postgres"
+        }
+      },
+      "API_SALES_ORDER_SRV": {
+        "kind": "odata-v2",
+        "model": "srv/external/API_SALES_ORDER_SRV",
+        "credentials": {
+          "url": "https://my401292-api.s4hana.cloud.sap/sap/opu/odata/sap/API_SALES_ORDER_SRV",
+          "authentication": "BasicAuthentication",
+          "username": "TEST_S",
+          "password": "b9caGsU@Q)RS}2(5>b%N=-eD)oV${HVl<wnG5ADQ"
+        },
+          "csrf":true
+      },
+      "API_SALES_ORDER_SRV_REST": {
+        "kind": "rest",
+        "model": "srv/external/API_SALES_ORDER_SRV",
+        "credentials": {
+          "url": "https://my401292-api.s4hana.cloud.sap/sap/opu/odata/sap/API_SALES_ORDER_SRV",
+          "authentication": "BasicAuthentication",
+          "username": "TEST_S",
+          "password": "b9caGsU@Q)RS}2(5>b%N=-eD)oV${HVl<wnG5ADQ"
+        },
+          "csrf":true
+      }
+    }
+  }
+}
