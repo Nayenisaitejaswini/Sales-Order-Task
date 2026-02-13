@@ -23,7 +23,7 @@ module.exports = cds.service.impl(async function () {
         )
     );
 
-    console.log("res : ",res);
+    //console.log("res : ",res);
 
     const new_entries = res.map(entry => ({
         ID: uuidv4(),
@@ -38,7 +38,7 @@ module.exports = cds.service.impl(async function () {
     console.log("Fetched entries:", new_entries.length);
      if (new_entries.length){
        const res2= await cds.run(INSERT.into(Salesorder).entries(new_entries));
-       console.log(res2);
+       //console.log(res2);
     }
     return new_entries;  
     });
@@ -65,6 +65,28 @@ this.on('UPDATE', 'Salesorder', async req => {
     });
 
     return req.data;
+});
+this.on('approve',async req => {
+    console.log("approve is",req);
+    const {ID}= req.data;
+    await cds.run(
+        cds.update(Salesorder)
+        .set({Status:'APPROVED'})
+        .where({ID : ID})
+    )
+    return "status approved"
+});
+this.on('reject',async req => {
+    console.log("result is",req);
+    const {ID}=req.data;
+    const {reason}= req.data;
+    await cds.run(
+        cds.update(Salesorder)
+        .set({Status:"REJECTED",Rejectreason:reason})
+        .where({ID})
+    );
+    return "status rejected"
+
 });
 
 });

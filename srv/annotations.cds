@@ -4,6 +4,11 @@ annotate SalesOrder with @(
     UI.LineItem: [
         {
             $Type:'UI.DataField',
+            Label : 'Status',
+            Value: Status
+        },
+        {
+            $Type:'UI.DataField',
             Label : 'Sales Order',
             Value: SalesOrder
         },
@@ -45,6 +50,10 @@ annotate SalesOrder with @(
     UI.FieldGroup #SalesOrder : {
         $Type : 'UI.FieldGroupType',
         Data : [
+             {
+            $Type:'UI.DataField',
+            Value: Status
+        },
         {
             $Type:'UI.DataField',
             Value: SalesOrder

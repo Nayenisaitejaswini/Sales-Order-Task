@@ -2,6 +2,9 @@ namespace com.satinfotech.Konnekt;
 using {cuid, managed} from '@sap/cds/common';
 
 entity Salesorder: managed, cuid {
+    key ID : UUID;
+    @title: 'Status'
+    Status: String(15);
     @title:'SalesOrder'
     SalesOrder: String(10);
     @title: 'SalesOrderType'
@@ -16,4 +19,5 @@ entity Salesorder: managed, cuid {
     SoldToParty: String(20);
     @title: 'SalesOrderDate'
     SalesOrderDate: String(15);
+    
 }

@@ -12,7 +12,8 @@
     "uuid": "^13.0.0"
   },
   "scripts": {
-    "start": "cds-serve"
+    "start": "cds-serve",
+    "watch-salesorderapp": "cds watch --open salesorderapp/index.html?sap-ui-xx-viewCache=false --livereload false"
   },
   "cds": {
     "requires": {
@@ -35,7 +36,7 @@
           "username": "TEST_S",
           "password": "b9caGsU@Q)RS}2(5>b%N=-eD)oV${HVl<wnG5ADQ"
         },
-          "csrf":true
+        "csrf": true
       },
       "API_SALES_ORDER_SRV_REST": {
         "kind": "rest",
@@ -46,8 +47,17 @@
           "username": "TEST_S",
           "password": "b9caGsU@Q)RS}2(5>b%N=-eD)oV${HVl<wnG5ADQ"
         },
-          "csrf":true
+        "csrf": true
       }
     }
-  }
+  },
+  "workspaces": [
+    "app/*"
+  ],
+  "devDependencies": {
+    "cds-plugin-ui5": "^0.13.0"
+  },
+  "sapux": [
+    "app/salesorderapp"
+  ]
 }
