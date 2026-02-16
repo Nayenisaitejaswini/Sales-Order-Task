@@ -1,48 +1,57 @@
 sap.ui.define([
-    "sap/m/MessageToast"
-], function(MessageToast) {
+    "sap/m/MessageToast",
+    "sap/m/MessageBox"
+], function (MessageToast, MessageBox) {
     'use strict';
 
     return {
-       approve: function(oContext, aSelectedContexts) {
+        approve: function (oContext, aSelectedContexts) {
 
-        console.log("Selected Contexts:", aSelectedContexts);
+            const oSelectedContext = aSelectedContexts[0];
 
-        const oSelectedContext = aSelectedContexts[0];
-
-        if (!oSelectedContext) {
-            MessageToast.show("Please select a record");
-            return;
-        }
-
-        const oData = oSelectedContext.getObject();
-        const oModel=oSelectedContext.getModel();
-        console.log("Data:", oData);
-
-        MessageToast.show("Approve clicked for SalesOrder: " + oData.SalesOrder);
-        try{
-            const data={
-                Salesorder:oData.SalesOrder,
-                ID:oData.ID,
-                Status:oData.Status
+            if (!oSelectedContext) {
+                MessageToast.show("Please select a record");
+                return;
             }
-             $.ajax({
-                url: '/odata/v4/sales-order/approve',
-                method: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(data),
-                success: function (response) {
-                    console.log("response is",response);
-                    oSelectedContext.refresh();
-                    oModel.refresh();
 
+            const oData = oSelectedContext.getObject();
+            const oModel = oSelectedContext.getModel();
+
+            // Confirmation Dialog
+            MessageBox.confirm(
+                "Do you want to approve Sales Order: " + oData.SalesOrder + "?",
+                {
+                    title: "Confirm Approval",
+                    actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+                    emphasizedAction: MessageBox.Action.YES,
+
+                    onClose: function (sAction) {
+                        if (sAction === MessageBox.Action.YES) {
+
+                            const data = {
+                                Salesorder: oData.SalesOrder,
+                                ID: oData.ID,
+                                Status: oData.Status
+                            };
+
+                            $.ajax({
+                                url: '/odata/v4/sales-order/approve',
+                                method: 'POST',
+                                contentType: 'application/json',
+                                data: JSON.stringify(data),
+                                success: function (response) {
+                                    MessageToast.show("Sales Order Approved");
+                                    oSelectedContext.refresh();
+                                    oModel.refresh();
+                                },
+                                error: function () {
+                                    MessageToast.show("Approval failed");
+                                }
+                            });
+                        }
+                    }
                 }
-            });
-        }catch(error){
-
+            );
         }
-
-    }
-};
-
+    };
 });
