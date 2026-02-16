@@ -19,5 +19,18 @@ entity Salesorder: managed, cuid {
     SoldToParty: String(20);
     @title: 'SalesOrderDate'
     SalesOrderDate: String(15);
+
+    SalesorderItems:Composition of many{
+        key ID:UUID @UI.Hidden;
+        SalesOrderItem:String;
+        HigherLevelItem: String;
+        SalesOrderItemCategory: String;
+        SalesOrderItemText: String;
+        PurchaseOrderByCustomer: String;
+        PurchaseOrderByShipToParty: String;
+        UnderlyingPurchaseOrderItem: String;
+        Material: String;
+
+    }
     
 }
