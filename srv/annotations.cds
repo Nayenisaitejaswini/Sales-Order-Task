@@ -70,7 +70,7 @@ annotate SalesOrder.SalesorderItems with @(
          {
             $Type:'UI.DataField',
             Label : 'PurchaseOrderByCustome',
-            Value: PurchaseOrderByCustome
+            Value: PurchaseOrderByCustomer
         },
          {
             $Type:'UI.DataField',
@@ -108,7 +108,7 @@ annotate SalesOrder.SalesorderItems with @(
         },
          {
             $Type:'UI.DataField',
-            Value: PurchaseOrderByCustome
+            Value: PurchaseOrderByCustomer
         },
          {
             $Type:'UI.DataField',

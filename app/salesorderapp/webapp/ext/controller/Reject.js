@@ -5,7 +5,7 @@ sap.ui.define([
     "use strict";
 
     return {
-        reject: function (oContext, aSelectedContexts) {
+        rejects: function (oContext, aSelectedContexts) {
 
             console.log("Reject clicked"); // Check in browser console
 
@@ -36,7 +36,7 @@ sap.ui.define([
                             };
 
                             $.ajax({
-                                url: "/odata/v4/sales-order/reject",
+                                url: "/odata/v4/sales-order/rejects",
                                 type: "POST",
                                 contentType: "application/json",
                                 data: JSON.stringify(payload),

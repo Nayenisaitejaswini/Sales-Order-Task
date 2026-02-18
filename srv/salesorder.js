@@ -1,5 +1,5 @@
 const cds = require('@sap/cds');
-const { SELECT, expand, UPSERT } = require('@sap/cds/lib/ql/cds-ql');
+const { SELECT, expand, INSERT } = require('@sap/cds/lib/ql/cds-ql');
 const { UUID, UUIDV4 } = require('sequelize');
 const { v4: uuidv4 } = require('uuid');
 
@@ -24,11 +24,12 @@ module.exports = cds.service.impl(async function () {
         )
     );
     //console.log("res is",res);
-
+    var cid;
     const Saleorder_entries=[], saleorderItem_entries=[];
     res.forEach(entry => {
+        cid = uuidv4()
         Saleorder_entries.push({
-            ID: uuidv4(),
+            ID: cid,
             SalesOrder:entry.SalesOrder,
             SalesOrderType:entry.SalesOrderType,
             SalesOrderTypeInternalCode:entry.SalesOrderTypeInternalCode,
@@ -42,7 +43,7 @@ module.exports = cds.service.impl(async function () {
         entry.to_Item.forEach(items => {
             saleorderItem_entries.push({
                 ID: uuidv4(),
-                up__ID: uuidv4(),
+                up__ID: cid,
                 SalesOrderItem:items.SalesOrderItem,
                 HigherLevelItem: items.HigherLevelItem,
                 SalesOrderItemCategory: items.SalesOrderItemCategory,
@@ -62,11 +63,11 @@ module.exports = cds.service.impl(async function () {
    
     if (Saleorder_entries.length) {
 
-        const res1= await cds.run(UPSERT.into("com.satinfotech.Konnekt.salesorder").entries(Saleorder_entries));
+        const res1= await cds.run(INSERT.into("com.satinfotech.Konnekt.Salesorder").entries(Saleorder_entries));
         console.log("res1 is",res1);
     }
     if (saleorderItem_entries.length) {
-        const res2=await cds.run(UPSERT.into("com.satinfotech.Konnekt.salesorder_salesorderitems").entries(saleorderItem_entries));
+        const res2=await cds.run(INSERT.into("com.satinfotech.Konnekt.Salesorder.SalesorderItems").entries(saleorderItem_entries));
         console.log("res2 is",res2);
     }
         const result = await cds.run(req.query);
@@ -122,7 +123,7 @@ this.on('approve',async req => {
     )
     return "status approved"
 });
-this.on('reject',async req => {
+this.on('rejects',async req => {
     console.log("result is",req);
     const {ID}=req.data;
     const {reason}= req.data;
