@@ -9,18 +9,20 @@
     "@sap-cloud-sdk/resilience": "^4.4.0",
     "@sap/cds": "^9",
     "express": "^4",
+    "js2xmlparser": "^5.0.0",
     "uuid": "^13.0.0"
   },
   "scripts": {
     "start": "cds-serve",
-    "watch-salesorderapp": "cds watch --open salesorderapp/index.html?sap-ui-xx-viewCache=false --livereload false"
+    "watch-salesorderapp": "cds watch --open salesorderapp/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-salesapp": "cds watch --open salesapp/index.html?sap-ui-xx-viewCache=false --livereload false"
   },
   "cds": {
     "requires": {
       "db": {
         "impl": "@cap-js/postgres",
-        "pool":{
-          "max":20
+        "pool": {
+          "max": 20
         }
       },
       "API_SALES_ORDER_SRV": {
@@ -44,10 +46,8 @@
   "workspaces": [
     "app/*"
   ],
-  "devDependencies": {
-
-  },
   "sapux": [
-    "app/salesorderapp"
+    "app/salesorderapp",
+    "app/salesapp"
   ]
 }

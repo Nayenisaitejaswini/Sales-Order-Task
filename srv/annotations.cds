@@ -1,4 +1,64 @@
-using {SalesOrder.Salesorder as SalesOrder} from './salesorder';
+using {SalesOrder as SalesOrder} from './salesorder';
+
+
+annotate SalesOrder.SalesNumber with @(
+    UI.LineItem: [
+        {
+            $Type:'UI.DataField',
+            Label : 'SalesOrderType',
+            Value: SalesOrderType
+        },
+        {
+            $Type:'UI.DataField',
+            Label : 'Sales Order',
+            Value: SalesOrder
+        }
+    ],
+     UI.FieldGroup #SalesOrder2 : {
+        $Type : 'UI.FieldGroupType',
+        Data : [
+             {
+            $Type:'UI.DataField',
+            Value: Status
+        },
+        {
+            $Type:'UI.DataField',
+            Value: SalesOrder
+        }
+        ]}
+);
+
+annotate SalesOrder.SalesNumber with @(
+    UI.Facets : [
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID : 'SalesOrderGeneral',
+            Label : 'General Information',
+            Target : '@UI.FieldGroup#SalesOrder2'
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID : 'ItemsFacet',
+            Label : 'Sales Order Items',
+            Target : 'salesitems/@UI.LineItem'
+        }
+    ]
+);
+annotate SalesOrder.salesitems with @(
+    UI.LineItem: [
+        
+        {
+            $Type:'UI.DataField',
+            Label : 'Sales Order',
+            Value: SalesOrder
+        },
+          {
+            $Type:'UI.DataField',
+            Label : 'Sales Order Item',
+            Value: SalesOrderItem
+        },
+    ]
+);
 
 annotate SalesOrder with @(
     UI.LineItem: [
@@ -45,7 +105,7 @@ annotate SalesOrder with @(
         
     ]
 );
-annotate SalesOrder.SalesorderItems with @(
+annotate SalesOrder.Salesorder.SalesorderItems with @(
     UI.LineItem: [
         {
             $Type:'UI.DataField',
@@ -85,7 +145,7 @@ annotate SalesOrder.SalesorderItems with @(
         },
     ]
 );
-annotate SalesOrder.SalesorderItems with @(
+annotate SalesOrder.Salesorder.SalesorderItems with @(
     UI.FieldGroup #SalesorderItems : {
         $Type : 'UI.FieldGroupType',
         Data : [

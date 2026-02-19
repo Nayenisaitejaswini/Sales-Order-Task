@@ -1,6 +1,21 @@
 namespace com.satinfotech.Konnekt;
 using {cuid, managed} from '@sap/cds/common';
+using { API_SALES_ORDER_SRV as external } from '../srv/external/API_SALES_ORDER_SRV';
 
+entity salesitems as projection on external.A_SalesOrderItem{
+    *
+}
+entity SalesNumber:managed {
+    
+    @title: 'Status'
+    Status: String(15);
+    @title:'SalesOrder'
+    key SalesOrder: String(10);
+    @title: 'SalesOrderType'
+    SalesOrderType: String(40);
+
+    salesitems:Composition of many salesitems on salesitems.SalesOrder=$self.SalesOrder
+}
 entity Salesorder: managed, cuid {
     key ID : UUID;
     @title: 'Status'
@@ -22,6 +37,7 @@ entity Salesorder: managed, cuid {
 
     SalesorderItems:Composition of many{
         key ID:UUID @UI.Hidden;
+        SalesOrder:String;
         SalesOrderItem:String;
         HigherLevelItem: String;
         SalesOrderItemCategory: String;

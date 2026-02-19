@@ -8,8 +8,17 @@ service SalesOrder{
 
     action approve(Salesorder:String,ID:String,Status:String)   returns String;
     action rejects(Salesorder:String,ID:String,Status:String)   returns String;
+    action getData(Salesorder:String,ID:String,Status:String)   returns String;
+    action Number(Salesorder:String,ID:String,Status:String)   returns String;
+    entity salesitems as projection on Slorder.salesitems{
+        *
+    };
+    entity SalesNumber as projection on Slorder.SalesNumber{
+        *
+    };
 
 }
+
 
 
 

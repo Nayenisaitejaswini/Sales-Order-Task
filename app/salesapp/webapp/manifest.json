@@ -1,7 +1,7 @@
 {
   "_version": "1.81.0",
   "sap.app": {
-    "id": "salesorderapp",
+    "id": "salesapp",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -13,7 +13,7 @@
     "sourceTemplate": {
       "id": "@sap/generator-fiori:lrop",
       "version": "1.20.1",
-      "toolsId": "4ee5375d-f708-43d6-8eac-504c1b21f127"
+      "toolsId": "fd98b195-60c8-4508-89ed-dc5d2725d2fb"
     },
     "dataSources": {
       "mainService": {
@@ -60,7 +60,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "salesorderapp.i18n.i18n"
+          "bundleName": "salesapp.i18n.i18n"
         }
       },
       "": {
@@ -85,29 +85,33 @@
       "routes": [
         {
           "pattern": ":?query:",
-          "name": "SalesorderList",
-          "target": "SalesorderList"
+          "name": "SalesNumberList",
+          "target": "SalesNumberList"
         },
         {
-          "pattern": "Salesorder({key}):?query:",
-          "name": "SalesorderObjectPage",
-          "target": "SalesorderObjectPage"
+          "pattern": "SalesNumber({key}):?query:",
+          "name": "SalesNumberObjectPage",
+          "target": "SalesNumberObjectPage"
+        },
+        {
+          "pattern": "SalesNumber({key})/salesitems({key2}):?query:",
+          "name": "salesitemsObjectPage",
+          "target": "salesitemsObjectPage"
         }
       ],
       "targets": {
-        "SalesorderList": {
+        "SalesNumberList": {
           "type": "Component",
-          "id": "SalesorderList",
+          "id": "SalesNumberList",
           "name": "sap.fe.templates.ListReport",
           "options": {
             "settings": {
-              "initialLoad": true,
-              "contextPath": "/Salesorder",
+              "contextPath": "/SalesNumber",
               "variantManagement": "Page",
               "navigation": {
-                "Salesorder": {
+                "SalesNumber": {
                   "detail": {
-                    "route": "SalesorderObjectPage"
+                    "route": "SalesNumberObjectPage"
                   }
                 }
               },
@@ -117,33 +121,12 @@
                     "type": "ResponsiveTable"
                   },
                   "actions": {
-                    "button": {
-                      "press": "salesorderapp.ext.controller.button.button",
+                    "Number": {
+                      "press": "salesapp.ext.controller.Number.Number",
                       "visible": true,
                       "enabled": true,
                       "requiresSelection": false,
-                      "text": "Submit"
-                    },
-                    "Approve": {
-                      "press": "salesorderapp.ext.controller.Approve.approve",
-                      "visible": true,
-                      "enabled": true,
-                      "requiresSelection": true,
-                      "text": "Approve"
-                    },
-                    "Reject": {
-                      "press": "salesorderapp.ext.controller.Reject.reject",
-                      "visible": true,
-                      "enabled": true,
-                      "requiresSelection": true,
-                      "text": "reject"
-                    },
-                    "getData": {
-                      "press": "salesorderapp.ext.controller.getData.getData",
-                      "visible": true,
-                      "enabled": true,
-                      "requiresSelection": true,
-                      "text": "getData"
+                      "text": "Number"
                     }
                   }
                 }
@@ -151,14 +134,32 @@
             }
           }
         },
-        "SalesorderObjectPage": {
+        "SalesNumberObjectPage": {
           "type": "Component",
-          "id": "SalesorderObjectPage",
+          "id": "SalesNumberObjectPage",
           "name": "sap.fe.templates.ObjectPage",
           "options": {
             "settings": {
               "editableHeaderContent": false,
-              "contextPath": "/Salesorder"
+              "contextPath": "/SalesNumber",
+              "navigation": {
+                "salesitems": {
+                  "detail": {
+                    "route": "salesitemsObjectPage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "salesitemsObjectPage": {
+          "type": "Component",
+          "id": "salesitemsObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/SalesNumber/salesitems"
             }
           }
         }
